@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price Monitor — Products</title>
+  <meta name="description" content="Browse and filter tracked products across luxury marketplaces">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">📊 <span>Price</span>Monitor</div>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/products" class="active">Products</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>Products</h1>
+      <p>Browse and filter products across all marketplaces</p>
+    </div>
+
+    <div class="filters" id="filters">
+      <div class="filter-group">
+        <label>Source</label>
+        <select id="filter-source">
+          <option value="">All Sources</option>
+          <option value="grailed">Grailed</option>
+          <option value="fashionphile">Fashionphile</option>
+          <option value="1stdibs">1stDibs</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Category</label>
+        <select id="filter-category">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Brand</label>
+        <input type="text" id="filter-brand" placeholder="e.g. Gucci">
+      </div>
+      <div class="filter-group">
+        <label>Min Price</label>
+        <input type="number" id="filter-min-price" placeholder="0" min="0">
+      </div>
+      <div class="filter-group">
+        <label>Max Price</label>
+        <input type="number" id="filter-max-price" placeholder="100000" min="0">
+      </div>
+      <div class="filter-group">
+        <label>Search</label>
+        <input type="text" id="filter-search" placeholder="Search title...">
+      </div>
+      <button class="btn btn-primary" onclick="applyFilters()">Filter</button>
+      <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+    </div>
+
+    <div class="card">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Source</th>
+            <th>Condition</th>
+          </tr>
+        </thead>
+        <tbody id="products-body">
+          <tr><td colspan="6" class="loading">Loading products</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </main>
+
+  <script src="/static/js/products.js"></script>
+</body>
+</html>
