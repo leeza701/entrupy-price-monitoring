@@ -16,7 +16,7 @@ class UsageTrackingMiddleware(BaseHTTPMiddleware):
         response: Response = await call_next(request)
         elapsed = time.time() - start
 
-        # Only track API calls (not static files)
+        
         if request.url.path.startswith("/api"):
             api_key = request.headers.get("X-API-Key", "anonymous")
             try:
@@ -35,6 +35,6 @@ class UsageTrackingMiddleware(BaseHTTPMiddleware):
                     )
                     await session.commit()
             except Exception:
-                pass  # Don't let tracking failures break the API
+                pass  
 
         return response
