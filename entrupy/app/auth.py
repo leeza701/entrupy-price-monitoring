@@ -20,6 +20,6 @@ async def require_api_key(api_key: str = Security(api_key_header)) -> str:
     if api_key not in API_KEYS:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid API key.",
+            detail="Invalid API.",
         )
     return api_key
