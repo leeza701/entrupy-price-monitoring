@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price Monitor — Product Detail</title>
+  <meta name="description" content="Product detail with price history chart and change events">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">📊 <span>Price</span>Monitor</div>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/products">Products</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div id="product-detail">
+      <p class="loading">Loading product details</p>
+    </div>
+  </main>
+
+  <script src="/static/js/product.js"></script>
+</body>
+</html>
