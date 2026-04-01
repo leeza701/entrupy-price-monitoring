@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price Monitor — Dashboard</title>
+  <meta name="description" content="Product Price Monitoring System — Dashboard with aggregate stats and analytics">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">📊 <span>Price</span>Monitor</div>
+    <nav>
+      <a href="/" class="active">Dashboard</a>
+      <a href="/products">Products</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>Dashboard</h1>
+      <p>Overview of tracked products across marketplaces</p>
+    </div>
+
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card"><div class="label">Total Products</div><div class="value" id="stat-total">—</div></div>
+      <div class="stat-card"><div class="label">Sources</div><div class="value accent" id="stat-sources">—</div></div>
+      <div class="stat-card"><div class="label">Avg Price</div><div class="value green" id="stat-avg">—</div></div>
+      <div class="stat-card"><div class="label">Price Changes</div><div class="value" id="stat-events">—</div></div>
+    </div>
+
+    <div style="margin-bottom:1.5rem">
+      <button class="btn btn-primary" id="refresh-btn" onclick="triggerRefresh()">⟳ Refresh Data</button>
+    </div>
+
+    <div class="charts-grid">
+      <div class="card">
+        <h2>Products by Source</h2>
+        <canvas id="source-chart"></canvas>
+      </div>
+      <div class="card">
+        <h2>Average Price by Category</h2>
+        <canvas id="category-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Source Breakdown</h2>
+      <table class="product-table" id="source-table">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Products</th>
+            <th>Avg Price</th>
+            <th>Min Price</th>
+            <th>Max Price</th>
+          </tr>
+        </thead>
+        <tbody id="source-table-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
