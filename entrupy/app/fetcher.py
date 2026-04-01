@@ -18,7 +18,7 @@ from app.database import Product, PriceHistory, PriceEvent, AsyncSessionLocal
 logger = logging.getLogger(__name__)
 
 
-# ── Marketplace Normalizers ──────────────────────────────────────────────────
+
 
 def normalize_grailed(item: Dict[str, Any]) -> Dict[str, Any]:
     """Normalize a Grailed listing to the common product schema."""
@@ -102,7 +102,7 @@ SOURCE_FILES = {
 }
 
 
-# ── Retry-capable fetch ──────────────────────────────────────────────────────
+
 
 async def fetch_with_retry(
     source: str,
@@ -117,7 +117,7 @@ async def fetch_with_retry(
 
     for attempt in range(1, FETCH_RETRY_ATTEMPTS + 1):
         try:
-            # Simulate network delay
+           
             await asyncio.sleep(random.uniform(0.05, 0.2))
 
             with open(filepath, "r") as f:
@@ -136,10 +136,10 @@ async def fetch_with_retry(
                 raise
             await asyncio.sleep(delay)
 
-    return []  # unreachable, but keeps mypy happy
+    return []  
 
 
-# ── Price-change detection & upsert ──────────────────────────────────────────
+
 
 async def upsert_product(
     db: AsyncSession, normalized: Dict[str, Any]
@@ -160,12 +160,12 @@ async def upsert_product(
     existing = result.scalars().first()
 
     if existing is None:
-        # New product
+       
         product = Product(**normalized)
         db.add(product)
         await db.flush()
 
-        # First price history entry
+        
         db.add(PriceHistory(
             product_id=product.id,
             price=product.current_price,
@@ -174,25 +174,25 @@ async def upsert_product(
 
         return {"is_new": True, "price_changed": False, "old_price": None, "product": product}
 
-    # Existing product — check for price change
+    
     old_price = existing.current_price
     new_price = normalized["current_price"]
     price_changed = abs(old_price - new_price) > 0.01
 
-    # Update fields
+    
     for key, value in normalized.items():
         if key != "metadata_json" or value:
             setattr(existing, key, value)
 
     if price_changed:
-        # Record price history
+      
         db.add(PriceHistory(
             product_id=existing.id,
             price=new_price,
             source=existing.source,
         ))
 
-        # Create price change event
+        
         change_pct = ((new_price - old_price) / old_price * 100) if old_price else 0
         db.add(PriceEvent(
             product_id=existing.id,
@@ -205,7 +205,7 @@ async def upsert_product(
     return {"is_new": False, "price_changed": price_changed, "old_price": old_price, "product": existing}
 
 
-# ── Main refresh orchestrator ────────────────────────────────────────────────
+
 
 async def refresh_source(source: str) -> Dict[str, Any]:
     """Refresh data from a single marketplace source.
